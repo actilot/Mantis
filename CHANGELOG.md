@@ -2,6 +2,13 @@
 
 -----
 
+### [1.7.3](https://www.github.com/guoyingtao/Mantis/compare/v1.7.2...v1.7.3) (2021-08-27)
+
+
+### Bug Fixes
+
+* delete a blank row ([d1506e1](https://www.github.com/guoyingtao/Mantis/commit/d1506e1d5f899114607d5fef0e73dfb0d43363d0))
+
 ### [1.7.2](https://www.github.com/guoyingtao/Mantis/compare/v1.7.1...v1.7.2) (2021-08-11)
 
 
