@@ -323,6 +323,25 @@ public class CropViewController: UIViewController {
           )
           navigationItem.leftBarButtonItem = button
         }
+      
+        if mode == .noToolbar {
+          let doneButton = UIBarButtonItem(
+            title: config.texts.done,
+            style: .plain,
+            target: self,
+            action: #selector(doneButtonTapped(_:))
+          )
+          doneButton
+            .setTitleTextAttributes(
+              [
+                NSAttributedString.Key.foregroundColor: config.colors.doneTextColor,
+                NSAttributedString.Key.font: config.fonts.done,
+              ],
+              for: .normal
+            )
+          
+          navigationItem.rightBarButtonItem = doneButton
+        }
     }
     
     private func createCropView() {
@@ -638,12 +657,16 @@ extension CropViewController: CropToolbarDelegate {
         handleAlterCropper90Degree()
     }
   
-  @objc func backButtonTapped(_ sender: AnyObject) {
+    @objc func backButtonTapped(_ sender: AnyObject) {
         if navigationController?.viewControllers.first != self {
           navigationController?.popViewController(animated: true)
         } else if isPresentedModally {
           dismiss(animated: true, completion: nil)
         }
+    }
+  
+    @objc func doneButtonTapped(_ sender: AnyObject) {
+        handleCrop()
     }
 }
 

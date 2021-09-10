@@ -163,12 +163,15 @@ public class LocalizationConfig {
 
 public struct Config {
     public struct Fonts {
-      public var title = UIFont.systemFont(ofSize: 17)
+      public var title = UIFont.boldSystemFont(ofSize: 17)
+      public var done = UIFont.boldSystemFont(ofSize: 17)
       public var cropInstruction = UIFont.systemFont(ofSize: 18)
     }
     
     public struct Colors {
       public var controllerBackgroundColor = UIColor.black
+      
+      public var doneTextColor = UIColor.white
       
       public var cropInstructionTextColor = UIColor.white
       public var cropInstructionBackgroundColor = UIColor.black
@@ -176,6 +179,7 @@ public struct Config {
     
     public struct Texts {
       public var title = LocalizedHelper.getString("Mantis.Title")
+      public var done = LocalizedHelper.getString("Mantis.Done")
       public var cropInstruction = LocalizedHelper.getString("Mantis.Instructions")
     }
     
