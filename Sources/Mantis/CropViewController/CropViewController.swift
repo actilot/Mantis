@@ -176,7 +176,7 @@ public class CropViewController: UIViewController {
         width: self.view.frame.size.width,
         height: lebelHeight)
     )
-    view.backgroundColor = .black
+    view.backgroundColor = config.colors.cropInstructionBackgroundColor
     
     instructionView = view
     
@@ -193,12 +193,12 @@ public class CropViewController: UIViewController {
         width: self.view.frame.size.width,
         height: lebelHeight)
     )
-    label.text = LocalizedHelper.getString("Mantis.Instructions")
-    label.font = .systemFont(ofSize: 18)
+    label.text = config.texts.cropInstruction
+    label.font = config.fonts.cropInstruction
     label.textAlignment = .center
     label.minimumScaleFactor = 0.5
     label.adjustsFontSizeToFitWidth = true
-    label.textColor = .white
+    label.textColor = config.colors.cropInstructionTextColor
 
     instructionView.addSubview(label)
     

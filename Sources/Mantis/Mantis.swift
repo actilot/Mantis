@@ -162,6 +162,19 @@ public class LocalizationConfig {
 }
 
 public struct Config {
+  public struct Fonts {
+    public var cropInstruction = UIFont.systemFont(ofSize: 18)
+  }
+  
+  public struct Colors {
+    public var cropInstructionTextColor = UIColor.white
+    public var cropInstructionBackgroundColor = UIColor.black
+  }
+  
+  public struct Texts {
+    public var cropInstruction = LocalizedHelper.getString("Mantis.Instructions")
+  }
+  
     public var presetTransformationType: PresetTransformationType = .none
     public var cropShapeType: CropShapeType = .rect
     public var cropVisualEffectType: CropVisualEffectType = .blurDark
@@ -170,6 +183,10 @@ public struct Config {
     public var showRotationDial = true
     public var cropToolbarConfig = CropToolbarConfig()
     public private(set) var localizationConfig = Mantis.localizationConfig
+  
+    public var fonts = Fonts()
+    public var colors = Colors()
+    public var texts = Texts()
 
     var customRatios: [(width: Int, height: Int)] = []
 
