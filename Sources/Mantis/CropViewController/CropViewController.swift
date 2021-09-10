@@ -212,7 +212,7 @@ public class CropViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
+        view.backgroundColor = config.colors.controllerBackgroundColor
         
         createCropView()
         createCropToolbar()

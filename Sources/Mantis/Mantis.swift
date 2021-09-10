@@ -167,6 +167,8 @@ public struct Config {
   }
   
   public struct Colors {
+    public var controllerBackgroundColor = UIColor.black
+    
     public var cropInstructionTextColor = UIColor.white
     public var cropInstructionBackgroundColor = UIColor.black
   }
