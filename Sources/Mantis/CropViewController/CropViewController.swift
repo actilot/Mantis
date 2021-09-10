@@ -228,8 +228,8 @@ public class CropViewController: UIViewController {
   
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.titleTextAttributes =
-          [NSAttributedString.Key.font: config.fonts.title]
+      
+        setupNavBarItems()
     }
     
     override public func viewDidLayoutSubviews() {
@@ -295,6 +295,33 @@ public class CropViewController: UIViewController {
                 }
             }
             
+        }
+    }
+  
+    func setupNavBarItems() {
+      navigationController?.navigationBar.titleTextAttributes =
+        [NSAttributedString.Key.font: config.fonts.title]
+      
+        if navigationController?.viewControllers.first != self,
+           let backImage = config.images.back {
+          let backButton = UIBarButtonItem(
+            image: backImage,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped(_:))
+          )
+          
+          navigationItem.leftBarButtonItem = backButton
+        }
+      
+        if isPresentedModally, let close = config.images.close {
+          let button = UIBarButtonItem(
+            image: close,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped(_:))
+          )
+          navigationItem.leftBarButtonItem = button
         }
     }
     
@@ -610,6 +637,14 @@ extension CropViewController: CropToolbarDelegate {
     public func didSelectAlterCropper90Degree() {
         handleAlterCropper90Degree()
     }
+  
+  @objc func backButtonTapped(_ sender: AnyObject) {
+        if navigationController?.viewControllers.first != self {
+          navigationController?.popViewController(animated: true)
+        } else if isPresentedModally {
+          dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 // API
@@ -627,4 +662,12 @@ extension CropViewController {
     public func process(_ image: UIImage) -> UIImage? {
         return cropView.crop(image).croppedImage
     }
+}
+
+extension UIViewController {
+  var isPresentedModally: Bool {
+    return presentingViewController != nil ||
+      navigationController?.presentingViewController?.presentedViewController === navigationController ||
+      tabBarController?.presentingViewController is UITabBarController
+  }
 }

@@ -162,22 +162,27 @@ public class LocalizationConfig {
 }
 
 public struct Config {
-  public struct Fonts {
-    public var title = UIFont.systemFont(ofSize: 17)
-    public var cropInstruction = UIFont.systemFont(ofSize: 18)
-  }
-  
-  public struct Colors {
-    public var controllerBackgroundColor = UIColor.black
+    public struct Fonts {
+      public var title = UIFont.systemFont(ofSize: 17)
+      public var cropInstruction = UIFont.systemFont(ofSize: 18)
+    }
     
-    public var cropInstructionTextColor = UIColor.white
-    public var cropInstructionBackgroundColor = UIColor.black
-  }
-  
-  public struct Texts {
-    public var title = LocalizedHelper.getString("Mantis.Title")
-    public var cropInstruction = LocalizedHelper.getString("Mantis.Instructions")
-  }
+    public struct Colors {
+      public var controllerBackgroundColor = UIColor.black
+      
+      public var cropInstructionTextColor = UIColor.white
+      public var cropInstructionBackgroundColor = UIColor.black
+    }
+    
+    public struct Texts {
+      public var title = LocalizedHelper.getString("Mantis.Title")
+      public var cropInstruction = LocalizedHelper.getString("Mantis.Instructions")
+    }
+    
+    public struct Images {
+      public var back: UIImage?
+      public var close: UIImage?
+    }
   
     public var presetTransformationType: PresetTransformationType = .none
     public var cropShapeType: CropShapeType = .rect
@@ -191,6 +196,7 @@ public struct Config {
     public var fonts = Fonts()
     public var colors = Colors()
     public var texts = Texts()
+    public var images = Images()
 
     var customRatios: [(width: Int, height: Int)] = []
 
