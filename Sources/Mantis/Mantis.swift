@@ -48,6 +48,13 @@ public func cropCustomizableViewController(image: UIImage,
                               cropToolbar: cropToolbar)
 }
 
+public func cropViewControllerWithNoToolbar(image: UIImage,
+                                           config: Mantis.Config = Mantis.Config()) -> CropViewController {
+    return CropViewController(image: image,
+                              config: config,
+                              mode: .noToolbar)
+}
+
 public func getCroppedImage(byCropInfo info: CropInfo, andImage image: UIImage) -> UIImage? {
     return image.getCroppedImage(byCropInfo: info)
 }

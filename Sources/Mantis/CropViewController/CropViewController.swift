@@ -42,6 +42,7 @@ public extension CropViewControllerDelegate where Self: UIViewController {
 
 public enum CropViewControllerMode {
     case normal
+    case noToolbar
     case customizable    
 }
 
@@ -67,6 +68,7 @@ public class CropViewController: UIViewController {
     private var cropStackView: UIStackView!
     private var initialLayout = false
     private var disableRotation = false
+    private var instructionView: UIView!
     
     deinit {
         print("CropViewController deinit.")
@@ -126,6 +128,8 @@ public class CropViewController: UIViewController {
                 
                 config.cropToolbarConfig.includeFixedRatioSettingButton = true
         }
+      
+        guard mode != .noToolbar else { return }
                 
         if mode == .normal {
             config.cropToolbarConfig.mode = .normal
@@ -134,7 +138,7 @@ public class CropViewController: UIViewController {
         }
         
         cropToolbar.createToolbarUI(config: config.cropToolbarConfig)
-                
+
         let heightForVerticalOrientation = config.cropToolbarConfig.cropToolbarHeightForVertialOrientation
         let widthForHorizonOrientation = config.cropToolbarConfig.cropToolbarWidthForHorizontalOrientation
         cropToolbar.initConstraints(heightForVerticalOrientation: heightForVerticalOrientation,
@@ -162,6 +166,48 @@ public class CropViewController: UIViewController {
                                  ratioOptions: config.ratioOptions,
                                  customRatios: config.getCustomRatioItems())
     }
+  
+  fileprivate func createInstructionsView() {
+    var lebelHeight: CGFloat = 50
+    let view = UIView(
+      frame: CGRect(
+        x: 0,
+        y: 0,
+        width: self.view.frame.size.width,
+        height: lebelHeight)
+    )
+    view.backgroundColor = .black
+    
+    instructionView = view
+    
+    var height = lebelHeight
+    if let bottomSafeAreaInset =  UIApplication.shared.keyWindow?.safeAreaInsets.bottom {
+      height += bottomSafeAreaInset
+    }
+    instructionView.heightAnchor.constraint(equalToConstant: height).isActive = true
+    
+    let label = UILabel(
+      frame: CGRect(
+        x: 0,
+        y: 0,
+        width: self.view.frame.size.width,
+        height: lebelHeight)
+    )
+    label.text = LocalizedHelper.getString("Mantis.Instructions")
+    label.font = .systemFont(ofSize: 18)
+    label.textAlignment = .center
+    label.minimumScaleFactor = 0.5
+    label.adjustsFontSizeToFitWidth = true
+    label.textColor = .white
+
+    instructionView.addSubview(label)
+    
+    label.heightAnchor.constraint(equalToConstant: lebelHeight).isActive = true
+    label.topAnchor.constraint(equalTo: instructionView.topAnchor).isActive = true
+    label.bottomAnchor.constraint(equalTo: instructionView.bottomAnchor).isActive = true
+    label.leftAnchor.constraint(equalTo: instructionView.leftAnchor).isActive = true
+    label.rightAnchor.constraint(equalTo: instructionView.rightAnchor).isActive = true
+  }
     
     override public func viewDidLoad() {
         super.viewDidLoad()
@@ -170,6 +216,7 @@ public class CropViewController: UIViewController {
         
         createCropView()
         createCropToolbar()
+        createInstructionsView()
         if config.cropToolbarConfig.ratioCandidatesShowType == .alwaysShowRatioList && config.cropToolbarConfig.includeFixedRatioSettingButton {
             createRatioSelector()
         }
@@ -441,6 +488,7 @@ public class CropViewController: UIViewController {
         
         self.delegate?.cropViewControllerDidCrop(self, cropped: image, transformation: cropResult.transformation)        
     }
+  
 }
 
 // Auto layout
@@ -453,6 +501,7 @@ extension CropViewController {
         if let ratioSelector = ratioSelector {
             cropStackView.addArrangedSubview(ratioSelector)
         }
+        cropStackView.addArrangedSubview(instructionView)
         
         stackView = UIStackView()
         view.addSubview(stackView!)
@@ -461,9 +510,15 @@ extension CropViewController {
         stackView?.translatesAutoresizingMaskIntoConstraints = false
         cropToolbar.translatesAutoresizingMaskIntoConstraints = false
         cropView.translatesAutoresizingMaskIntoConstraints = false
+        instructionView.translatesAutoresizingMaskIntoConstraints = false
         
         stackView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+      
+        if mode == .noToolbar {
+          stackView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        } else {
+          stackView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        }
         stackView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         stackView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
     }
