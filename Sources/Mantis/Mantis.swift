@@ -163,6 +163,7 @@ public class LocalizationConfig {
 
 public struct Config {
   public struct Fonts {
+    public var title = UIFont.systemFont(ofSize: 17)
     public var cropInstruction = UIFont.systemFont(ofSize: 18)
   }
   
@@ -174,6 +175,7 @@ public struct Config {
   }
   
   public struct Texts {
+    public var title = LocalizedHelper.getString("Mantis.Title")
     public var cropInstruction = LocalizedHelper.getString("Mantis.Instructions")
   }
   

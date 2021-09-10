@@ -213,6 +213,8 @@ public class CropViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = config.colors.controllerBackgroundColor
+      
+        title = config.texts.title
         
         createCropView()
         createCropToolbar()
@@ -222,6 +224,12 @@ public class CropViewController: UIViewController {
         }
         initLayout()
         updateLayout()        
+    }
+  
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.titleTextAttributes =
+          [NSAttributedString.Key.font: config.fonts.title]
     }
     
     override public func viewDidLayoutSubviews() {
